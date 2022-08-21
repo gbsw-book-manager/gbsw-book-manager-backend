@@ -11,20 +11,19 @@ import java.util.List;
 @Service
 public interface UserService {
 
+    public User getUser(String username);
+
+    public List<User> getUsers();
+
     public void saveUser(RegisterInfo registerInfo);
 
-    public Boolean checkEmail(String email);
-
-    public Role saveRole(Role role);
-
-    public Book saveBook(Book book);
+    public Boolean checkUserEmail(String email);
 
     public void addRoleToUser(String username, String roleName);
 
     public void addBookToUser(String username, String bookName);
 
-    public User getUser(String username);
-
-    public List<User> getUsers();
+    //
+    public Role saveRole(Role role);
 
 }

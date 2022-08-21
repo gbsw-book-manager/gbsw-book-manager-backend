@@ -33,7 +33,7 @@ public class RegisterController {
         String email = registerInfo.getUsername();
         String code = registerInfo.getCode();
 
-        if (userService.checkEmail(email)) {
+        if (userService.checkUserEmail(email)) {
             if (mailService.checkCode(email, code)) {
                 userService.saveUser(registerInfo);
                 userService.addRoleToUser(email, "ROLE_USER");

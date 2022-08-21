@@ -31,6 +31,16 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public User getUser(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public void saveUser(RegisterInfo registerInfo) {
         log.info("Saving new User {} to the database", registerInfo.getName());
         User user = new User();
@@ -44,21 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkEmail(String email) {
+    public Boolean checkUserEmail(String email) {
         User user = userRepository.findByUsername(email);
         log.info("user : {}", user);
 
         return user == null;
-    }
-
-    @Override
-    public Role saveRole(Role role) {
-        return roleRepository.save(role);
-    }
-
-    @Override
-    public Book saveBook(Book book) {
-        return bookRepository.save(book);
     }
 
     @Override
@@ -76,13 +76,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public Role saveRole(Role role) {
+        return roleRepository.save(role);
     }
 
 }
