@@ -43,13 +43,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(RegisterDto registerDto) {
         log.info("Saving new User {} to the database", registerDto.getName());
-        User user = new User();
-        user.setName(registerDto.getName());
-        user.setStuden_id(registerDto.getStudentId());
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setRoles(new ArrayList<>());
-        user.setBooks(new ArrayList<>());
+        User user = new User(
+            null,
+            registerDto.getName(),
+            registerDto.getStudentId(),
+            registerDto.getUsername(),
+            passwordEncoder.encode(registerDto.getPassword()),
+            new ArrayList<>(),
+            new ArrayList<>()
+        );
+        userRepository.save(user);
+    }
+
+    @Override
+    public void saveUserTest(User user) {
         userRepository.save(user);
     }
 

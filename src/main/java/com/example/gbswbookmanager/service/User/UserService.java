@@ -16,6 +16,8 @@ public interface UserService {
 
     public void saveUser(RegisterDto registerDto);
 
+    public void saveUserTest(User user);
+
     public Boolean checkUserEmail(String email);
 
     public void addRoleToUser(String username, String roleName);

@@ -38,7 +38,7 @@ public class BookController {
                     bookDto.getQuantity()
             );
             log.info("book insert is completed");
-            bookService.saveBook(book);
+            bookService.addBook(book);
         }
     }
 

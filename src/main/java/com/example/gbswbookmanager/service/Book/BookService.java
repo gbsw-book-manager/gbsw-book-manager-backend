@@ -13,7 +13,7 @@ public interface BookService {
     public List<Book> getBooks();
 
     // 책 DB에 저장
-    public void saveBook(Book book);
+    public void addBook(Book book);
 
     // 책 DB 정보 수정
     public void updateBook(Book book);
