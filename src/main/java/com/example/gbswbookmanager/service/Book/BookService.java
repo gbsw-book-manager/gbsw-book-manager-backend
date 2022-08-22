@@ -9,6 +9,9 @@ import java.util.List;
 @Service
 public interface BookService {
 
+    // Id로 DB에서 책 정보 가져오기
+    public Book getBook(Long id);
+
     // 모든 책 리스트 가져오기
     public List<Book> getBooks();
 

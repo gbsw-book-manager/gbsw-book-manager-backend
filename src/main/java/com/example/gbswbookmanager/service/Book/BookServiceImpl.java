@@ -17,6 +17,11 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     @Override
+    public Book getBook(Long id) {
+        return bookRepository.findById(id).orElseThrow(NullPointerException::new);
+    }
+
+    @Override
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
