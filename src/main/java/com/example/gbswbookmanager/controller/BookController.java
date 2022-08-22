@@ -19,13 +19,12 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public ResponseEntity<Book> getBook(@RequestParam Long id) {
-        return ResponseEntity.ok().body(bookService.getBook(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Book>> getBooks() {
-        return ResponseEntity.ok().body(bookService.getBooks());
+    public ResponseEntity<?> getBookOrBooks(@RequestParam(required = false) Long id) {
+        if (id != null) {
+            return ResponseEntity.ok().body(bookService.getBook(id));
+        } else {
+            return ResponseEntity.ok().body(bookService.getBooks());
+        }
     }
 
     @PostMapping
