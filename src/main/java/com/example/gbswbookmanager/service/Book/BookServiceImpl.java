@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.service.Book;
 
-import com.example.gbswbookmanager.dto.BookInfo;
+import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBookQuantity(BookInfo bookInfo) {
-        Book book = bookRepository.findByTitle(bookInfo.getTitle());
+    public void updateBookQuantity(BookDto bookDto) {
+        Book book = bookRepository.findByTitle(bookDto.getTitle());
 
-        book.setQuantity(book.getQuantity() + bookInfo.getQuantity());
-        book.setQuantityleft(book.getQuantityleft() + bookInfo.getQuantity());
+        book.setQuantity(book.getQuantity() + bookDto.getQuantity());
+        book.setQuantityleft(book.getQuantityleft() + bookDto.getQuantity());
 
         bookRepository.save(book);
     }

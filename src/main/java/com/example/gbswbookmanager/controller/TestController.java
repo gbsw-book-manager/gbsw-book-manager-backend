@@ -1,8 +1,6 @@
 package com.example.gbswbookmanager.controller;
 
-import com.example.gbswbookmanager.dto.RegisterInfo;
 import com.example.gbswbookmanager.entity.User;
-import com.example.gbswbookmanager.service.Mail.MailService;
 import com.example.gbswbookmanager.service.User.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

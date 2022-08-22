@@ -17,9 +17,7 @@ public class MailConfig {
         javaMailSender.setHost("smtp.naver.com");
         javaMailSender.setUsername("gbsw_book_manager@naver.com");
         javaMailSender.setPassword("Gbswbookmanager!");
-
         javaMailSender.setPort(465);
-
         javaMailSender.setJavaMailProperties(getMailProperties());
 
         return javaMailSender;
@@ -27,12 +25,14 @@ public class MailConfig {
 
     private Properties getMailProperties() {
         Properties properties = new Properties();
+
         properties.setProperty("mail.transport.protocol", "smtp");
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.starttls.enable", "true");
         properties.setProperty("mail.debug", "true");
         properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");
         properties.setProperty("mail.smtp.ssl.enable","true");
+
         return properties;
     }
 

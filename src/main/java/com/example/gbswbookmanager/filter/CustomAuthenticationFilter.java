@@ -2,7 +2,7 @@ package com.example.gbswbookmanager.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.gbswbookmanager.dto.PrincipalDetails;
+import com.example.gbswbookmanager.config.auth.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;

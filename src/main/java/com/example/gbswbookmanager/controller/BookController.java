@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.controller;
 
-import com.example.gbswbookmanager.dto.BookInfo;
+import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.service.Book.BookService;
 import lombok.RequiredArgsConstructor;
@@ -24,20 +24,20 @@ public class BookController {
     }
 
     @PostMapping
-    public void InsertOrUpdateBook(@RequestBody BookInfo bookInfo) {
-        String bookTitle = bookInfo.getTitle();
+    public void InsertOrUpdateBook(@RequestBody BookDto bookDto) {
+        String bookTitle = bookDto.getTitle();
 
         if (bookService.checkBookExistence(bookTitle)) {
-            bookService.updateBookQuantity(bookInfo);
+            bookService.updateBookQuantity(bookDto);
             log.info("book update is completed");
         } else {
             Book book = new Book(
                     null,
-                    bookInfo.getTitle(),
-                    bookInfo.getAuthor(),
-                    bookInfo.getPublisher(),
-                    bookInfo.getQuantity(),
-                    bookInfo.getQuantity()
+                    bookDto.getTitle(),
+                    bookDto.getAuthor(),
+                    bookDto.getPublisher(),
+                    bookDto.getQuantity(),
+                    bookDto.getQuantity()
             );
             log.info("book insert is completed");
 

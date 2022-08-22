@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.service.Book;
 
-import com.example.gbswbookmanager.dto.BookInfo;
+import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.entity.Book;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public interface BookService {
     public void saveBook(Book book);
 
     // 책 수량 DB 정보 업데이트
-    public void updateBookQuantity(BookInfo bookInfo);
+    public void updateBookQuantity(BookDto bookDto);
 
     // 책이 DB에 존재하는지 여부 확인
     public Boolean checkBookExistence(String title);

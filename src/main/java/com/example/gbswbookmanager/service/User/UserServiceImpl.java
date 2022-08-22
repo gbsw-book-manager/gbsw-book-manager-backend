@@ -1,7 +1,7 @@
 package com.example.gbswbookmanager.service.User;
 
 import com.example.gbswbookmanager.entity.Book;
-import com.example.gbswbookmanager.dto.RegisterInfo;
+import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.repository.BookRepository;
@@ -41,13 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(RegisterInfo registerInfo) {
-        log.info("Saving new User {} to the database", registerInfo.getName());
+    public void saveUser(RegisterDto registerDto) {
+        log.info("Saving new User {} to the database", registerDto.getName());
         User user = new User();
-        user.setName(registerInfo.getName());
-        user.setStuden_id(registerInfo.getStudentId());
-        user.setUsername(registerInfo.getUsername());
-        user.setPassword(passwordEncoder.encode(registerInfo.getPassword()));
+        user.setName(registerDto.getName());
+        user.setStuden_id(registerDto.getStudentId());
+        user.setUsername(registerDto.getUsername());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setRoles(new ArrayList<>());
         user.setBooks(new ArrayList<>());
         userRepository.save(user);
