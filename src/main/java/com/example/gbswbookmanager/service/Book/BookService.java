@@ -15,8 +15,14 @@ public interface BookService {
     // 책 DB에 저장
     public void saveBook(Book book);
 
-    // 책 수량 DB 정보 업데이트
+    // 책 DB 정보 수정
+    public void updateBook(Book book);
+
+    // 책 수량 DB 정보 수정
     public void updateBookQuantity(BookDto bookDto);
+
+    // Id를 통해 DB에서 책 삭제
+    public void deleteBook(Long id);
 
     // 책이 DB에 존재하는지 여부 확인
     public Boolean checkBookExistence(String title);

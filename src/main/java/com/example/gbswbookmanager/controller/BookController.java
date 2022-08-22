@@ -25,9 +25,7 @@ public class BookController {
 
     @PostMapping
     public void InsertOrUpdateBook(@RequestBody BookDto bookDto) {
-        String bookTitle = bookDto.getTitle();
-
-        if (bookService.checkBookExistence(bookTitle)) {
+        if (bookService.checkBookExistence(bookDto.getTitle())) {
             bookService.updateBookQuantity(bookDto);
             log.info("book update is completed");
         } else {
@@ -40,9 +38,18 @@ public class BookController {
                     bookDto.getQuantity()
             );
             log.info("book insert is completed");
-
             bookService.saveBook(book);
         }
+    }
+
+    @PutMapping
+    public void updateBook(@RequestBody Book book) {
+        bookService.updateBook(book);
+    }
+
+    @DeleteMapping
+    public void deleteBook(@RequestParam Long id) {
+        bookService.deleteBook(id);
     }
 
 }

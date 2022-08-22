@@ -27,6 +27,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void updateBook(Book book) {
+        Book updatedBook = bookRepository.findById(book.getId()).orElseThrow(NullPointerException::new);
+
+        updatedBook.setTitle(book.getTitle());
+        updatedBook.setAuthor(book.getAuthor());
+        updatedBook.setPublisher(book.getPublisher());
+        updatedBook.setQuantity(book.getQuantity());
+        updatedBook.setQuantityleft(book.getQuantityleft());
+
+        bookRepository.save(updatedBook);
+    }
+
+    @Override
     public void updateBookQuantity(BookDto bookDto) {
         Book book = bookRepository.findByTitle(bookDto.getTitle());
 
@@ -34,6 +47,13 @@ public class BookServiceImpl implements BookService {
         book.setQuantityleft(book.getQuantityleft() + bookDto.getQuantity());
 
         bookRepository.save(book);
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(NullPointerException::new);
+
+        bookRepository.delete(book);
     }
 
     @Override
