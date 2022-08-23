@@ -61,19 +61,20 @@ public class UserServiceImpl implements UserService {
     public void saveUser(RegisterDto registerDto) {
         log.info("Saving new User {} to the database", registerDto.getName());
         User user = new User(
-            null,
-            registerDto.getName(),
-            registerDto.getStudentId(),
-            registerDto.getUsername(),
-            passwordEncoder.encode(registerDto.getPassword()),
-            new ArrayList<>(),
-            new ArrayList<>()
+                null,
+                registerDto.getName(),
+                registerDto.getStudentId(),
+                registerDto.getUsername(),
+                passwordEncoder.encode(registerDto.getPassword()),
+                new ArrayList<>(),
+                new ArrayList<>()
         );
         userRepository.save(user);
     }
 
     @Override
     public void saveUserTest(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

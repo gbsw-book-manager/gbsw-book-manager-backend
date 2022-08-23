@@ -464,15 +464,15 @@ public class MailServiceImpl implements MailService {
                 "                word-wrap: break-word;\n" +
                 "              \"height=\"30px\">&nbsp;</td></tr></tbody></table></center></body></html>", "text/html; charset=UTF-8");
 
-        return  message;
+        return message;
     }
 
     @Override
     public void sendMail(String name, String email) throws Exception {
-        try{
-            MimeMessage  mailMessage = createMessage(name, email);
+        try {
+            MimeMessage mailMessage = createMessage(name, email);
             javaMailSender.send(mailMessage);
-        }catch (MailException mailException){
+        } catch (MailException mailException) {
             mailException.printStackTrace();
             throw new IllegalAccessException();
         }
