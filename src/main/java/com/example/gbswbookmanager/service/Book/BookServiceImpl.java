@@ -2,17 +2,23 @@ package com.example.gbswbookmanager.service.Book;
 
 import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.entity.Book;
+import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.repository.BookRepository;
+import com.example.gbswbookmanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
+
+    private final UserRepository userRepository;
 
     private final BookRepository bookRepository;
 
@@ -37,6 +43,23 @@ public class BookServiceImpl implements BookService {
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
+
+    @Override
+    public List<String> getUserNameByBookId(Long id) {
+        List<User> users = userRepository.findAll();
+        List<String> username = new ArrayList<>();
+        for (User user : users) {
+            user.getBooks().forEach(
+                    book -> {
+                        if (Objects.equals(book.getId(), id)) {
+                            username.add(user.getName());
+                        }
+                    }
+            );
+        }
+        return username;
+    }
+
 
     @Override
     public void addBook(Book book) {

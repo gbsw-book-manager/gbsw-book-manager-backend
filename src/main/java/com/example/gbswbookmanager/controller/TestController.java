@@ -22,5 +22,4 @@ public class TestController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-
 }

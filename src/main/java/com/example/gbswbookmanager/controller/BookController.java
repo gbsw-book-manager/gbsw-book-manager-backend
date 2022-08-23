@@ -3,12 +3,11 @@ package com.example.gbswbookmanager.controller;
 import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.service.Book.BookService;
+import com.example.gbswbookmanager.service.User.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -52,7 +51,7 @@ public class BookController {
             return ResponseEntity.ok().build();
         } catch (Exception exception) {
             log.info("{} 책은 대출되어 있는 책입니다.", bookService.getBook(id).getTitle());
-            return ResponseEntity.ok().body("대출되어 있는 책입니다.");
+            return ResponseEntity.ok().body(bookService.getUserNameByBookId(id));
         }
     }
 
