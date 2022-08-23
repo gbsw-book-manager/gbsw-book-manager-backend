@@ -9,6 +9,9 @@ import java.util.List;
 @Service
 public interface BookService {
 
+    // BookDto를 통해서 Book을 새로 만듦
+    public Book setBook(BookDto bookDto);
+
     // Id로 DB에서 책 정보 가져오기
     public Book getBook(Long id);
 

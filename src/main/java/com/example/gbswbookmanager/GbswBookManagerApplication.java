@@ -40,6 +40,7 @@ public class GbswBookManagerApplication {
             bookService.addBook(new Book(null, "이펙티브 자바", "대형대형이", "대형출판사", 2, 3));
             bookService.addBook(new Book(null, "파이썬 기초", "지뇨", "지뇨출판사", 1, 1));
             bookService.addBook(new Book(null, "파이썬 고급", "지뇨지뇨", "지뇨출판사", 3, 2));
+            bookService.addBook(new Book(null, "공룡 중급", "지뇨지뇨", "지뇨출판사", 10, 2));
 
             userService.addRoleToUser("nicenicnic1@gmail.com", "ROLE_USER");
             userService.addRoleToUser("nicenicnic12@gmail.com", "ROLE_USER");

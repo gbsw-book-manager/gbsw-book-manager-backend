@@ -17,6 +17,18 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     @Override
+    public Book setBook(BookDto bookDto) {
+        return new Book(
+                null,
+                bookDto.getTitle(),
+                bookDto.getAuthor(),
+                bookDto.getPublisher(),
+                bookDto.getQuantity(),
+                bookDto.getQuantity()
+        );
+    }
+
+    @Override
     public Book getBook(Long id) {
         return bookRepository.findById(id).orElseThrow(NullPointerException::new);
     }

@@ -33,14 +33,7 @@ public class BookController {
             bookService.updateBookQuantity(bookDto);
             log.info("book update is completed");
         } else {
-            Book book = new Book(
-                    null,
-                    bookDto.getTitle(),
-                    bookDto.getAuthor(),
-                    bookDto.getPublisher(),
-                    bookDto.getQuantity(),
-                    bookDto.getQuantity()
-            );
+            Book book = bookService.setBook(bookDto);
             log.info("book insert is completed");
             bookService.addBook(book);
         }
@@ -52,8 +45,15 @@ public class BookController {
     }
 
     @DeleteMapping
-    public void deleteBook(@RequestParam Long id) {
-        bookService.deleteBook(id);
+    public ResponseEntity<?> deleteBook(@RequestParam Long id) {
+        try {
+            bookService.deleteBook(id);
+            log.info("정상적으로 삭제하였습니다.");
+            return ResponseEntity.ok().build();
+        } catch (Exception exception) {
+            log.info("{} 책은 대출되어 있는 책입니다.", bookService.getBook(id).getTitle());
+            return ResponseEntity.ok().body("대출되어 있는 책입니다.");
+        }
     }
 
 }
