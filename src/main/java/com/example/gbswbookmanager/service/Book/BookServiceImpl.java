@@ -18,8 +18,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    private final UserRepository userRepository;
-
     private final BookRepository bookRepository;
 
     @Override
@@ -43,23 +41,6 @@ public class BookServiceImpl implements BookService {
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
-
-    @Override
-    public List<String> getUserNameByBookId(Long id) {
-        List<User> users = userRepository.findAll();
-        List<String> username = new ArrayList<>();
-        for (User user : users) {
-            user.getBooks().forEach(
-                    book -> {
-                        if (Objects.equals(book.getId(), id)) {
-                            username.add(user.getName());
-                        }
-                    }
-            );
-        }
-        return username;
-    }
-
 
     @Override
     public void addBook(Book book) {

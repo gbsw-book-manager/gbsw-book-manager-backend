@@ -40,7 +40,23 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
-    
+
+    @Override
+    public List<String> getUserNameByBookId(Long id) {
+        List<User> users = userRepository.findAll();
+        List<String> username = new ArrayList<>();
+        for (User user : users) {
+            user.getBooks().forEach(
+                    book -> {
+                        if (Objects.equals(book.getId(), id)) {
+                            username.add(user.getName());
+                        }
+                    }
+            );
+        }
+        return username;
+    }
+
     @Override
     public void saveUser(RegisterDto registerDto) {
         log.info("Saving new User {} to the database", registerDto.getName());

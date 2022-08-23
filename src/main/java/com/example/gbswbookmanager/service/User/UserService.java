@@ -16,6 +16,9 @@ public interface UserService {
     // 모든 사용자 검색
     public List<User> getUsers();
 
+    // Book Id와 참조되어 있는 컬럼 찾기
+    public List<String> getUserNameByBookId(Long id);
+
     // 회원가입 폼을 통해서 DB에 저장
     public void saveUser(RegisterDto registerDto);
 

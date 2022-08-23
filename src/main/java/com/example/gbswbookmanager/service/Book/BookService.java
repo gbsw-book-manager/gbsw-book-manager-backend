@@ -18,9 +18,6 @@ public interface BookService {
     // 모든 책 리스트 가져오기
     public List<Book> getBooks();
 
-    // Book Id와 참조되어 있는 컬럼 찾기
-    public List<String> getUserNameByBookId(Long id);
-
     // 책 DB에 저장
     public void addBook(Book book);
 

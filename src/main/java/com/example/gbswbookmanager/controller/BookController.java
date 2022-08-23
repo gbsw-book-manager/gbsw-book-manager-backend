@@ -17,6 +17,8 @@ public class BookController {
 
     private final BookService bookService;
 
+    private final UserService userService;
+
     @GetMapping
     public ResponseEntity<?> getBookOrBooks(@RequestParam(required = false) Long id) {
         if (id != null) {
@@ -51,7 +53,7 @@ public class BookController {
             return ResponseEntity.ok().build();
         } catch (Exception exception) {
             log.info("{} 책은 대출되어 있는 책입니다.", bookService.getBook(id).getTitle());
-            return ResponseEntity.ok().body(bookService.getUserNameByBookId(id));
+            return ResponseEntity.ok().body(userService.getUserNameByBookId(id));
         }
     }
 
