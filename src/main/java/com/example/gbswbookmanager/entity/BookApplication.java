@@ -21,7 +21,7 @@ public class BookApplication {
 
     private String title;
 
-    private String publisher;
+    private String applicant;
 
     private String url;
 
