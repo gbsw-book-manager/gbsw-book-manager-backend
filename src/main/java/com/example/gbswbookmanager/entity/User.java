@@ -37,7 +37,4 @@ public class User {
     @ManyToMany
     private Collection<Book> books = new ArrayList<>();
 
-//    @ManyToMany
-//    private Collection<Book> bookloan = new ArrayList<>();
-
 }

@@ -2,9 +2,8 @@ package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.dto.LoanDto;
-import com.example.gbswbookmanager.dto.LoanResponseDto;
+import com.example.gbswbookmanager.dto.LoanDetailDto;
 import com.example.gbswbookmanager.entity.Book;
-import com.example.gbswbookmanager.entity.BookLoan;
 import com.example.gbswbookmanager.service.book.BookService;
 import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ public class BookController {
     }
 
     @GetMapping("/loan")
-    public ResponseEntity<List<LoanResponseDto>> getBookLoan() {
+    public ResponseEntity<List<LoanDetailDto>> getBookLoan() {
         return ResponseEntity.ok().body(bookService.getBookLoan());
     }
 
@@ -51,8 +50,12 @@ public class BookController {
     }
 
     @PostMapping("/loan")
-    public void bookLoan(@RequestBody LoanDto loanDto) {
-        bookService.bookLoan(loanDto);
+    public ResponseEntity<?> bookLoan(@RequestBody LoanDto loanDto) {
+        if (bookService.checkBookLoan(loanDto)) {
+            bookService.bookLoan(loanDto);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.ok().body("이미 빌린 책이 포함되어 있습니다.");
     }
 
     @PutMapping
