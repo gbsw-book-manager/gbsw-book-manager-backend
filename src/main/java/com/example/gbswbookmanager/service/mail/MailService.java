@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.service.Mail;
+package com.example.gbswbookmanager.service.mail;
 
 import org.springframework.stereotype.Service;
 

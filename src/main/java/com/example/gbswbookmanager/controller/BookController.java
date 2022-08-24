@@ -1,13 +1,18 @@
 package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.BookDto;
+import com.example.gbswbookmanager.dto.LoanDto;
+import com.example.gbswbookmanager.dto.LoanResponseDto;
 import com.example.gbswbookmanager.entity.Book;
-import com.example.gbswbookmanager.service.Book.BookService;
-import com.example.gbswbookmanager.service.User.UserService;
+import com.example.gbswbookmanager.entity.BookLoan;
+import com.example.gbswbookmanager.service.book.BookService;
+import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -28,6 +33,11 @@ public class BookController {
         }
     }
 
+    @GetMapping("/loan")
+    public ResponseEntity<List<LoanResponseDto>> getBookLoan() {
+        return ResponseEntity.ok().body(bookService.getBookLoan());
+    }
+
     @PostMapping
     public void InsertOrUpdateBook(@RequestBody BookDto bookDto) {
         if (bookService.checkBookExistence(bookDto.getTitle())) {
@@ -38,6 +48,11 @@ public class BookController {
             log.info("book insert is completed");
             bookService.addBook(book);
         }
+    }
+
+    @PostMapping("/loan")
+    public void bookLoan(@RequestBody LoanDto loanDto) {
+        bookService.bookLoan(loanDto);
     }
 
     @PutMapping

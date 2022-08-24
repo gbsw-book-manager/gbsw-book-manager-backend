@@ -1,8 +1,8 @@
 package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.RegisterDto;
-import com.example.gbswbookmanager.service.Mail.MailService;
-import com.example.gbswbookmanager.service.User.UserService;
+import com.example.gbswbookmanager.service.mail.MailService;
+import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

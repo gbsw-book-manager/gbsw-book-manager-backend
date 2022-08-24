@@ -1,7 +1,7 @@
 package com.example.gbswbookmanager.config.auth;
 
 import com.example.gbswbookmanager.entity.User;
-import com.example.gbswbookmanager.service.User.UserService;
+import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

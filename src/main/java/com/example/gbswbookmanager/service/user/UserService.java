@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.service.User;
+package com.example.gbswbookmanager.service.user;
 
 import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.entity.Role;
