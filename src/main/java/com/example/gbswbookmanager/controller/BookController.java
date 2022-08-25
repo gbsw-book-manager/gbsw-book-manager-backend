@@ -1,18 +1,13 @@
-package com.example.gbswbookmanager.controller.book;
+package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.BookDto;
-import com.example.gbswbookmanager.dto.LoanDto;
-import com.example.gbswbookmanager.dto.LoanDetailDto;
-import com.example.gbswbookmanager.entity.book.Book;
-import com.example.gbswbookmanager.service.book.BookLoanService;
+import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.service.book.BookService;
 import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController

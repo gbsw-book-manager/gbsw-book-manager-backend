@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.dto;
 
-import com.example.gbswbookmanager.entity.book.Book;
+import com.example.gbswbookmanager.entity.Book;
 import lombok.Data;
 
 @Data

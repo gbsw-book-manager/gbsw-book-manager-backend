@@ -1,10 +1,10 @@
 package com.example.gbswbookmanager.service.user;
 
-import com.example.gbswbookmanager.entity.book.Book;
+import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
-import com.example.gbswbookmanager.repository.book.BookRepository;
+import com.example.gbswbookmanager.repository.BookRepository;
 import com.example.gbswbookmanager.repository.RoleRepository;
 import com.example.gbswbookmanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

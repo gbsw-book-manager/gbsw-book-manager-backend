@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.entity.book;
+package com.example.gbswbookmanager.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,14 +13,18 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookLoan {
+public class BookApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    private Long identifyId;
 
-    private Long bookId;
+    private String title;
+
+    private String applicant;
+
+    private String url;
 
 }

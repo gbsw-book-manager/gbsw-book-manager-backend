@@ -1,8 +1,8 @@
-package com.example.gbswbookmanager.controller.book;
+package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.LoanDetailDto;
 import com.example.gbswbookmanager.dto.LoanDto;
-import com.example.gbswbookmanager.service.book.BookLoanService;
+import com.example.gbswbookmanager.service.bookLoan.BookLoanService;
 import com.example.gbswbookmanager.service.mail.LoanMailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

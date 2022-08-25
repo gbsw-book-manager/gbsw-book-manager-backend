@@ -1,12 +1,12 @@
-package com.example.gbswbookmanager.service.book;
+package com.example.gbswbookmanager.service.bookLoan;
 
 import com.example.gbswbookmanager.dto.LoanDetailDto;
 import com.example.gbswbookmanager.dto.LoanDto;
 import com.example.gbswbookmanager.entity.User;
-import com.example.gbswbookmanager.entity.book.Book;
-import com.example.gbswbookmanager.entity.book.BookLoan;
-import com.example.gbswbookmanager.repository.book.BookLoanRepository;
-import com.example.gbswbookmanager.repository.book.BookRepository;
+import com.example.gbswbookmanager.entity.Book;
+import com.example.gbswbookmanager.entity.BookLoan;
+import com.example.gbswbookmanager.repository.BookLoanRepository;
+import com.example.gbswbookmanager.repository.BookRepository;
 import com.example.gbswbookmanager.repository.UserRepository;
 import com.example.gbswbookmanager.service.mail.LoanMailService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager;
 
-import com.example.gbswbookmanager.entity.book.Book;
+import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.service.book.BookService;

@@ -1,6 +1,5 @@
 package com.example.gbswbookmanager.entity;
 
-import com.example.gbswbookmanager.entity.book.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
