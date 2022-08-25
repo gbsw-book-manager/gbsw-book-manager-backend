@@ -20,8 +20,6 @@ public class BookLoanController {
 
     private final BookLoanService bookLoanService;
 
-    private final LoanMailService loanMailService;
-
     @GetMapping
     public ResponseEntity<List<LoanDetailDto>> getBookLoanList() {
         return ResponseEntity.ok().body(bookLoanService.getBookLoanList());
