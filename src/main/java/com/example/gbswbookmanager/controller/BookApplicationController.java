@@ -27,4 +27,9 @@ public class BookApplicationController {
         bookApplicationService.addBookApplication(bookApplication);
     }
 
+    @DeleteMapping
+    public void deleteBookApplication(@RequestParam Long id) {
+        bookApplicationService.deleteApplication(id);
+    }
+
 }

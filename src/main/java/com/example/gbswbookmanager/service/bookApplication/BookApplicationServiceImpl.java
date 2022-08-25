@@ -26,4 +26,9 @@ public class BookApplicationServiceImpl implements BookApplicationService {
         log.info("{} is add to DB", bookApplication.getTitle());
         bookApplicationRepository.save(bookApplication);
     }
+
+    @Override
+    public void deleteApplication(Long id) {
+        bookApplicationRepository.deleteById(id);
+    }
 }

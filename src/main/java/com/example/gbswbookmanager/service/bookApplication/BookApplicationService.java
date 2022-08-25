@@ -14,4 +14,6 @@ public interface BookApplicationService {
     // 희망도서 신청하기
     public void addBookApplication(BookApplication bookApplication);
 
+    public void deleteApplication(Long id);
+
 }
