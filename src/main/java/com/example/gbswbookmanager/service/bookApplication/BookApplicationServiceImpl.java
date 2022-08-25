@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.service.bookApplication;
 
-import com.example.gbswbookmanager.entity.BookApplication;
+import com.example.gbswbookmanager.entity.book.BookApplication;
 import com.example.gbswbookmanager.repository.BookApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

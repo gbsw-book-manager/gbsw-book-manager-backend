@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.service.user;
 
-import com.example.gbswbookmanager.entity.Book;
+import com.example.gbswbookmanager.entity.book.Book;
 import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;

@@ -3,8 +3,8 @@ package com.example.gbswbookmanager.service.book;
 import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.dto.LoanDto;
 import com.example.gbswbookmanager.dto.LoanDetailDto;
-import com.example.gbswbookmanager.entity.Book;
-import com.example.gbswbookmanager.entity.BookLoan;
+import com.example.gbswbookmanager.entity.book.Book;
+import com.example.gbswbookmanager.entity.book.BookLoan;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.repository.BookLoanRepository;
 import com.example.gbswbookmanager.repository.BookRepository;
@@ -37,22 +37,7 @@ public class BookServiceImpl implements BookService {
         return book != null;
     }
 
-    @Override
-    public Boolean checkBookLoan(LoanDto loanDto) {
-        List<BookLoan> bookLoanList = bookLoanRepository.findAll();
 
-        Long userId = loanDto.getUserId();
-        List<Long> bookIdList = loanDto.getBookId();
-
-        for (BookLoan bookLoan : bookLoanList) {
-            if (Objects.equals(bookLoan.getUserId(), userId)) {
-                if (bookIdList.contains(bookLoan.getBookId())) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     @Override
     public Book setBook(BookDto bookDto) {
@@ -76,36 +61,14 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll();
     }
 
-    @Override
-    public List<LoanDetailDto> getBookLoan() {
-        List<BookLoan> loanList = bookLoanRepository.findAll();
-        List<LoanDetailDto> loanDetailList = new ArrayList<>();
-        for (BookLoan bookLoan : loanList) {
-            User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
-            Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
-            loanDetailList.add(new LoanDetailDto(user.getName(), book));
-        }
-        return loanDetailList;
-    }
+
 
     @Override
     public void addBook(Book book) {
         bookRepository.save(book);
     }
 
-    @Override
-    public void bookLoan(LoanDto loanDto) {
-        Long userId = loanDto.getUserId();
-        List<Long> bookIdList = loanDto.getBookId();
 
-        for (Long bookId : bookIdList) {
-            bookLoanRepository.save(new BookLoan(
-                    null,
-                    userId,
-                    bookId
-            ));
-        }
-    }
 
     @Override
     public void updateBook(Book book) {

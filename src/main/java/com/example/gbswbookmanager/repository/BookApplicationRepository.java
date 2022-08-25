@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.repository;
 
-import com.example.gbswbookmanager.entity.BookApplication;
+import com.example.gbswbookmanager.entity.book.BookApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

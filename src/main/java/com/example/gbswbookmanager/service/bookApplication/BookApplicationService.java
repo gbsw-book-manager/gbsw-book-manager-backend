@@ -1,6 +1,6 @@
 package com.example.gbswbookmanager.service.bookApplication;
 
-import com.example.gbswbookmanager.entity.BookApplication;
+import com.example.gbswbookmanager.entity.book.BookApplication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

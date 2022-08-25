@@ -3,7 +3,8 @@ package com.example.gbswbookmanager.controller;
 import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.dto.LoanDto;
 import com.example.gbswbookmanager.dto.LoanDetailDto;
-import com.example.gbswbookmanager.entity.Book;
+import com.example.gbswbookmanager.entity.book.Book;
+import com.example.gbswbookmanager.service.book.BookLoanService;
 import com.example.gbswbookmanager.service.book.BookService;
 import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookService bookService;
-
     private final UserService userService;
+    private final BookService bookService;
 
     @GetMapping
     public ResponseEntity<?> getBookOrBooks(@RequestParam(required = false) Long id) {
@@ -30,11 +30,6 @@ public class BookController {
         } else {
             return ResponseEntity.ok().body(bookService.getBooks());
         }
-    }
-
-    @GetMapping("/loan")
-    public ResponseEntity<List<LoanDetailDto>> getBookLoan() {
-        return ResponseEntity.ok().body(bookService.getBookLoan());
     }
 
     @PostMapping
@@ -49,14 +44,7 @@ public class BookController {
         }
     }
 
-    @PostMapping("/loan")
-    public ResponseEntity<?> bookLoan(@RequestBody LoanDto loanDto) {
-        if (bookService.checkBookLoan(loanDto)) {
-            bookService.bookLoan(loanDto);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.ok().body("이미 빌린 책이 포함되어 있습니다.");
-    }
+
 
     @PutMapping
     public void updateBook(@RequestBody Book book) {
