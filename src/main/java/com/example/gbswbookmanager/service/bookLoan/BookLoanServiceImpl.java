@@ -96,7 +96,6 @@ public class BookLoanServiceImpl implements BookLoanService {
             ));
         }
     }
-    // sdf
 
     @Override
     public void loanApproval(Long id) throws Exception {
