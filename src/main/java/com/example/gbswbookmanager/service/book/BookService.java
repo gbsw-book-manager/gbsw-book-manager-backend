@@ -12,6 +12,7 @@ public interface BookService {
     // 책이 DB에 존재하는지 여부 확인
     public Boolean checkBookExistence(String title);
 
+    // 남는 책이 존재하는 지 여부 확인
     public Boolean checkBookQuantity(Long id);
 
     // BookDto를 통해서 Book을 새로 만듦
@@ -34,7 +35,5 @@ public interface BookService {
 
     // Id를 통해 DB에서 책 삭제
     public void deleteBook(Long id);
-
-//    public void bookReturn(String username, String bookTitle);
 
 }
