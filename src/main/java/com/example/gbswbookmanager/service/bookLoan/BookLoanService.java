@@ -21,4 +21,7 @@ public interface BookLoanService {
     // 관리자가 책 대출 신청을 승인함
     public void loanApproval(Long id) throws Exception;
 
+    // 관리자가 책 대출 신청을 거절함
+    public void refuseBookLoan(Long id);
+
 }

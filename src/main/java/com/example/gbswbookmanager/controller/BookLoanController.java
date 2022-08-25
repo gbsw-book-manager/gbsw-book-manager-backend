@@ -4,7 +4,6 @@ import com.example.gbswbookmanager.dto.LoanDetailDto;
 import com.example.gbswbookmanager.dto.LoanDto;
 import com.example.gbswbookmanager.service.book.BookService;
 import com.example.gbswbookmanager.service.bookLoan.BookLoanService;
-import com.example.gbswbookmanager.service.mail.LoanMailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +30,7 @@ public class BookLoanController {
             bookLoanService.bookLoan(loanDto);
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok().body("이미 빌린 책이 포함되어 있습니다.");
+        return ResponseEntity.ok().body("대출 신청을 한 책, 이미 대출 한 책 또는 수량이 부족합니다.");
     }
 
     @PostMapping("/approval")
@@ -42,6 +41,11 @@ public class BookLoanController {
         } else {
             return ResponseEntity.ok().body("남은 책이 없습니다.");
         }
+    }
+
+    @DeleteMapping("/refuse")
+    public void refuseBookLoan(@RequestParam Long id) {
+        bookLoanService.refuseBookLoan(id);
     }
 
 }

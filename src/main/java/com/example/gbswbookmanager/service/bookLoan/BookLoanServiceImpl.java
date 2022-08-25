@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -34,17 +33,40 @@ public class BookLoanServiceImpl implements BookLoanService {
 
     @Override
     public Boolean checkBookLoan(LoanDto loanDto) {
-        List<BookLoan> bookLoanList = bookLoanRepository.findAll();
-
-        Long userId = loanDto.getUserId();
+        User user = userRepository.findById(loanDto.getUserId()).orElseThrow(NullPointerException::new);
         List<Long> bookIdList = loanDto.getBookId();
 
+        // 유저가 책을 5권 이상 빌렸는 지 확인
+        if (user.getBooks().size() == 5) {
+            log.info("0");
+            return false;
+        }
+
+        // 유저가 대출한 책에서 빌리려하는 책이 있는 지 확인
+        for (Book book : user.getBooks()) {
+            if (bookIdList.contains(book.getId())) {
+                log.info("1");
+                return false;
+            }
+        }
+
+        // 유저가 대출 신청한 책에서 빌리려하는 책이 있는 지 확인
+        List<BookLoan> bookLoanList = bookLoanRepository.findAll();
+
         for (BookLoan bookLoan : bookLoanList) {
-            if (Objects.equals(bookLoan.getUserId(), userId)) {
+            // 빌리려는 책의 수량이 남는 지 확인
+            Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
+            if (book.getQuantityleft() == 0) {
+                log.info("2");
+                return false;
+            }
+
+            if (bookLoan.getUserId().equals(loanDto.getUserId())) {
                 if (bookIdList.contains(bookLoan.getBookId())) {
+                    log.info("3");
                     return false;
                 }
-            }
+             }
         }
         return true;
     }
@@ -88,5 +110,10 @@ public class BookLoanServiceImpl implements BookLoanService {
         bookRepository.save(book);
 
         loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle());
+    }
+
+    @Override
+    public void refuseBookLoan(Long id) {
+        bookLoanRepository.deleteById(id);
     }
 }
