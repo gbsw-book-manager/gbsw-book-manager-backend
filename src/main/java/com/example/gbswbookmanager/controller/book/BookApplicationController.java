@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.controller;
+package com.example.gbswbookmanager.controller.book;
 
 import com.example.gbswbookmanager.entity.book.BookApplication;
 import com.example.gbswbookmanager.service.bookApplication.BookApplicationService;

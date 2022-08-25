@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.controller;
+package com.example.gbswbookmanager.controller.book;
 
 import com.example.gbswbookmanager.dto.LoanDetailDto;
 import com.example.gbswbookmanager.dto.LoanDto;

@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.repository;
+package com.example.gbswbookmanager.repository.book;
 
 import com.example.gbswbookmanager.entity.book.BookApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
