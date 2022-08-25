@@ -37,7 +37,7 @@ public class GbswBookManagerApplication {
             userService.saveRole(new Role(null, "ROLE_ADMIN"));
 
             bookService.addBook(new Book(null, "이펙티브 타입스크립트", "대형이", "대형출판사", 5, 4));
-            bookService.addBook(new Book(null, "이펙티브 자바", "대형대형이", "대형출판사", 2, 3));
+            bookService.addBook(new Book(null, "이펙티브 자바", "대형대형이", "대형출판사", 2, 1));
             bookService.addBook(new Book(null, "파이썬 기초", "지뇨", "지뇨출판사", 1, 1));
             bookService.addBook(new Book(null, "파이썬 고급", "지뇨지뇨", "지뇨출판사", 3, 2));
             bookService.addBook(new Book(null, "공룡 중급", "지뇨지뇨", "지뇨출판사", 10, 2));

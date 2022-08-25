@@ -12,6 +12,8 @@ public interface BookService {
     // 책이 DB에 존재하는지 여부 확인
     public Boolean checkBookExistence(String title);
 
+    public Boolean checkBookQuantity(Long id);
+
     // BookDto를 통해서 Book을 새로 만듦
     public Book setBook(BookDto bookDto);
 

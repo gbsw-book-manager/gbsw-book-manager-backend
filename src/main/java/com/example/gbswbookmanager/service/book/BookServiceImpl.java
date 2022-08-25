@@ -2,9 +2,9 @@ package com.example.gbswbookmanager.service.book;
 
 import com.example.gbswbookmanager.dto.BookDto;
 import com.example.gbswbookmanager.entity.Book;
+import com.example.gbswbookmanager.entity.BookLoan;
 import com.example.gbswbookmanager.repository.BookLoanRepository;
 import com.example.gbswbookmanager.repository.BookRepository;
-import com.example.gbswbookmanager.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    private final UserRepository userRepository;
-
     private final BookRepository bookRepository;
 
     private final BookLoanRepository bookLoanRepository;
@@ -31,7 +29,13 @@ public class BookServiceImpl implements BookService {
         return book != null;
     }
 
+    @Override
+    public Boolean checkBookQuantity(Long id) {
+        BookLoan bookLoan = bookLoanRepository.findById(id).orElseThrow(NullPointerException::new);
+        Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
 
+        return book.getQuantityleft() != 0;
+    }
 
     @Override
     public Book setBook(BookDto bookDto) {

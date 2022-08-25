@@ -81,9 +81,12 @@ public class BookLoanServiceImpl implements BookLoanService {
         User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
         Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
 
-        loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle());
+        book.setQuantityleft(book.getQuantityleft() - 1);
 
         user.getBooks().add(book);
         bookLoanRepository.deleteById(id);
+        bookRepository.save(book);
+
+        loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle());
     }
 }
