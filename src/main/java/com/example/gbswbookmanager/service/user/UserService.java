@@ -1,5 +1,6 @@
 package com.example.gbswbookmanager.service.user;
 
+import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @Service
 public interface UserService {
+
+    // 사용자가 회원가입 했는 지 확인
+    public Boolean checkUserEmail(String email);
 
     // USERNAME을 통해 DB에서 사용자 검색
     public User getUser(String username);
@@ -25,8 +29,7 @@ public interface UserService {
     // TEST SERVICE
     public void saveUserTest(User user);
 
-    // 사용자가 회원가입 했는 지 확인
-    public Boolean checkUserEmail(String email);
+    public Boolean changePassword(PasswordDto passwordDto);
 
     // 권한을 사용자에게 추가
     public void addRoleToUser(String username, String roleName);

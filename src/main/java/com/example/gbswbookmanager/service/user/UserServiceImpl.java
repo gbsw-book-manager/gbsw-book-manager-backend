@@ -1,5 +1,6 @@
 package com.example.gbswbookmanager.service.user;
 
+import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.entity.Role;
@@ -30,6 +31,14 @@ public class UserServiceImpl implements UserService {
     private final BookRepository bookRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public Boolean checkUserEmail(String email) {
+        User user = userRepository.findByUsername(email);
+        log.info("user : {}", user);
+
+        return user == null;
+    }
 
     @Override
     public User getUser(String username) {
@@ -79,11 +88,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkUserEmail(String email) {
-        User user = userRepository.findByUsername(email);
-        log.info("user : {}", user);
+    public Boolean changePassword(PasswordDto passwordDto) {
+        try {
+            User user = userRepository.findByUsername(passwordDto.getUsername());
 
-        return user == null;
+            if (passwordEncoder.matches(passwordDto.getPassword(), user.getPassword())) {
+                if (passwordDto.getNewPassword().equals(passwordDto.getNewPasswordCheck())) {
+                    user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+                    userRepository.save(user);
+                }
+            }
+            return true;
+        } catch (Exception exception) {
+            log.info(exception.getMessage());
+            return false;
+        }
     }
 
     @Override
