@@ -78,7 +78,7 @@ public class BookLoanServiceImpl implements BookLoanService {
         for (BookLoan bookLoan : loanList) {
             User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
             Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
-            loanDetail.add(new LoanDetailDto(user.getName(), book));
+            loanDetail.add(new LoanDetailDto(bookLoan.getId() , user.getName(), book));
         }
         return loanDetail;
     }
