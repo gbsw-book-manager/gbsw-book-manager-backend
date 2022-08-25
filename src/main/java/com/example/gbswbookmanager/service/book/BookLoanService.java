@@ -18,4 +18,7 @@ public interface BookLoanService {
     // 사용자가 책을 빌림
     public void bookLoan(LoanDto loanDto);
 
+    // 관리자가 책 대출 신청을 승인함
+    public void loanApproval(Long id) throws Exception;
+
 }

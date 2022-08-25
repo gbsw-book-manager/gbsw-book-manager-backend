@@ -8,16 +8,19 @@ import com.example.gbswbookmanager.entity.book.BookLoan;
 import com.example.gbswbookmanager.repository.book.BookLoanRepository;
 import com.example.gbswbookmanager.repository.book.BookRepository;
 import com.example.gbswbookmanager.repository.UserRepository;
+import com.example.gbswbookmanager.service.mail.LoanMailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookLoanServiceImpl implements BookLoanService {
 
@@ -26,6 +29,8 @@ public class BookLoanServiceImpl implements BookLoanService {
     private final BookRepository bookRepository;
 
     private final BookLoanRepository bookLoanRepository;
+
+    private final LoanMailService loanMailService;
 
     @Override
     public Boolean checkBookLoan(LoanDto loanDto) {
@@ -70,4 +75,15 @@ public class BookLoanServiceImpl implements BookLoanService {
         }
     }
 
+    @Override
+    public void loanApproval(Long id) throws Exception {
+        BookLoan bookLoan = bookLoanRepository.findById(id).orElseThrow(NullPointerException::new);
+        User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
+        Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
+
+        loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle());
+
+        user.getBooks().add(book);
+        bookLoanRepository.deleteById(id);
+    }
 }

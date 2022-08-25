@@ -1,7 +1,7 @@
 package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.RegisterDto;
-import com.example.gbswbookmanager.service.mail.MailService;
+import com.example.gbswbookmanager.service.mail.AuthMailService;
 import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +15,11 @@ public class RegisterController {
 
     private final UserService userService;
 
-    private final MailService mailService;
+    private final AuthMailService authMailService;
 
     @PostMapping("/certification-email")
     public void certificationEmail(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
-        mailService.sendMail(name, email);
+        authMailService.sendAuthMail(name, email);
     }
 
     @PostMapping("/sign-up")
@@ -28,7 +28,7 @@ public class RegisterController {
         String code = registerDto.getCode();
 
         if (userService.checkUserEmail(email)) {
-            if (mailService.checkCode(email, code)) {
+            if (authMailService.checkAuthCode(email, code)) {
                 userService.saveUser(registerDto);
                 userService.addRoleToUser(email, "ROLE_USER");
             } else {

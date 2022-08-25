@@ -3,6 +3,7 @@ package com.example.gbswbookmanager.controller.book;
 import com.example.gbswbookmanager.dto.LoanDetailDto;
 import com.example.gbswbookmanager.dto.LoanDto;
 import com.example.gbswbookmanager.service.book.BookLoanService;
+import com.example.gbswbookmanager.service.mail.LoanMailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.List;
 @RequestMapping("/api/book/loan")
 @RequiredArgsConstructor
 public class BookLoanController {
+
+    private final LoanMailService loanMailService;
 
     private final BookLoanService bookLoanService;
 
@@ -28,6 +31,11 @@ public class BookLoanController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok().body("이미 빌린 책이 포함되어 있습니다.");
+    }
+
+    @PostMapping("/approval")
+    public void loanApproval(@RequestParam Long id) throws Exception {
+        bookLoanService.loanApproval(id);
     }
 
 }

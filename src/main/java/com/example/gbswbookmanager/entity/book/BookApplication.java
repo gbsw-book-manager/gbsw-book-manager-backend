@@ -19,6 +19,8 @@ public class BookApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long identifyId;
+
     private String title;
 
     private String applicant;
