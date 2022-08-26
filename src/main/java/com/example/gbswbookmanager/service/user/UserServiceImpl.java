@@ -89,20 +89,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean changePassword(PasswordDto passwordDto) {
-        try {
-            User user = userRepository.findByUsername(passwordDto.getUsername());
+        User user = userRepository.findByUsername(passwordDto.getUsername());
 
-            if (passwordEncoder.matches(passwordDto.getPassword(), user.getPassword())) {
-                if (passwordDto.getNewPassword().equals(passwordDto.getNewPasswordCheck())) {
-                    user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
-                    userRepository.save(user);
-                }
+        if (passwordEncoder.matches(passwordDto.getPassword(), user.getPassword())) {
+            if (passwordDto.getNewPassword().equals(passwordDto.getNewPasswordCheck())) {
+                user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+                userRepository.save(user);
+                return true;
             }
-            return true;
-        } catch (Exception exception) {
-            log.info(exception.getMessage());
+            log.info("1");
             return false;
         }
+        log.info("2");
+        return false;
     }
 
     @Override

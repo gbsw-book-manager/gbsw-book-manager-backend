@@ -49,7 +49,7 @@ public class UserController {
         if (userService.changePassword(passwordDto)) {
             return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.ok().body("비밀번호가 변경되지 않았습니다.");
+            return ResponseEntity.ok().body("비밀번호가 일치하지 않거나, 새 비밀번호가 다릅니다.");
         }
     }
 }
