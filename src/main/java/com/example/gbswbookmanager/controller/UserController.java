@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -21,6 +23,11 @@ public class UserController {
     private final UserService userService;
 
     private final AuthMailService authMailService;
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
 
     @PostMapping("/certification-email")
     public void certificationEmail(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {

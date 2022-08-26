@@ -47,7 +47,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return userRepository.findAll();
+        List<User> userList = userRepository.findAll();
+        List<User> users = new ArrayList<>(userList);
+
+        for (User user : userList) {
+            for (Role userRole : user.getRoles()) {
+                if (userRole.getName().contains("ROLE_ADMIN")) {
+                    users.remove(user);
+                }
+            }
+        }
+        return users;
     }
 
     @Override

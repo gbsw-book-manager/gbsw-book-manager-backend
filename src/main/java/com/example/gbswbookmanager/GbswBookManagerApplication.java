@@ -32,7 +32,7 @@ public class GbswBookManagerApplication {
             userService.saveUserTest(new User(null, "박대일", "2101", "nicenicnic1@gmail.com", "1234", new ArrayList<>(), new ArrayList<>()));
             userService.saveUserTest(new User(null, "박대이", "2102", "nicenicnic12@gmail.com", "1234", new ArrayList<>(), new ArrayList<>()));
             userService.saveUserTest(new User(null, "박대삼", "2103", "nicenicnic123@gmail.com", "1234", new ArrayList<>(), new ArrayList<>()));
-            userService.saveUserTest(new User(null, "김진효", "2206", "admin@jinhyo.dev", "1234", new ArrayList<>(), new ArrayList<>()));
+//            userService.saveUserTest(new User(null, "김진효", "2206", "admin@jinhyo.dev", "1234", new ArrayList<>(), new ArrayList<>()));
 
             userService.saveRole(new Role(null, "ROLE_USER"));
             userService.saveRole(new Role(null, "ROLE_ADMIN"));
