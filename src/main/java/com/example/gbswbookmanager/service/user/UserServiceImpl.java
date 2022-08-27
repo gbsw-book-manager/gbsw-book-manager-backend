@@ -46,6 +46,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Book> getUserLoanBooks(Long id) {
+        User user = userRepository.findById(id).orElseThrow(NullPointerException::new);
+
+        return new ArrayList<>(user.getBooks());
+    }
+
+    @Override
     public List<User> getUsers() {
         List<User> userList = userRepository.findAll();
         List<User> users = new ArrayList<>(userList);

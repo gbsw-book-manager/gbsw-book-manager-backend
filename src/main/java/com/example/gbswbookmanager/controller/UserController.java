@@ -3,6 +3,7 @@ package com.example.gbswbookmanager.controller;
 import com.example.gbswbookmanager.config.auth.PrincipalDetails;
 import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.dto.RegisterDto;
+import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.service.mail.AuthMailService;
 import com.example.gbswbookmanager.service.user.UserService;
@@ -23,6 +24,11 @@ public class UserController {
     private final UserService userService;
 
     private final AuthMailService authMailService;
+
+    @GetMapping("/user")
+    public ResponseEntity<List<Book>> getUserLoanBooks(@RequestParam Long id) {
+        return ResponseEntity.ok().body(userService.getUserLoanBooks(id));
+    }
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {

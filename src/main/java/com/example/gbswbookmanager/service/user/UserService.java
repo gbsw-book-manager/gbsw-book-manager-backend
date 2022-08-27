@@ -2,6 +2,7 @@ package com.example.gbswbookmanager.service.user;
 
 import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.dto.RegisterDto;
+import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public interface UserService {
 
     // USERNAME을 통해 DB에서 사용자 검색
     public User getUser(String username);
+
+    // id를 통해 그 사용자가 빌린 책 모두 출력
+    public List<Book> getUserLoanBooks(Long id);
 
     // 모든 사용자 검색
     public List<User> getUsers();
