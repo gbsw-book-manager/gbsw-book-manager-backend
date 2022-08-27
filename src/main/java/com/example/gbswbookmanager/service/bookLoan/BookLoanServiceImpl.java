@@ -1,7 +1,7 @@
 package com.example.gbswbookmanager.service.bookLoan;
 
-import com.example.gbswbookmanager.dto.LoanDetailDto;
-import com.example.gbswbookmanager.dto.LoanDto;
+import com.example.gbswbookmanager.dto.BookLoanDetailDto;
+import com.example.gbswbookmanager.dto.BookLoanDto;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.BookLoan;
@@ -32,9 +32,9 @@ public class BookLoanServiceImpl implements BookLoanService {
     private final LoanMailService loanMailService;
 
     @Override
-    public Boolean checkBookLoan(LoanDto loanDto) {
-        User user = userRepository.findById(loanDto.getUserId()).orElseThrow(NullPointerException::new);
-        List<Long> bookIdList = loanDto.getBookId();
+    public Boolean checkBookLoan(BookLoanDto BookLoanDto) {
+        User user = userRepository.findById(BookLoanDto.getUserId()).orElseThrow(NullPointerException::new);
+        List<Long> bookIdList = BookLoanDto.getBookId();
 
         // 유저가 책을 5권 이상 빌렸는 지 확인
         if (user.getBooks().size() == 5) {
@@ -61,7 +61,7 @@ public class BookLoanServiceImpl implements BookLoanService {
                 return false;
             }
 
-            if (bookLoan.getUserId().equals(loanDto.getUserId())) {
+            if (bookLoan.getUserId().equals(BookLoanDto.getUserId())) {
                 if (bookIdList.contains(bookLoan.getBookId())) {
                     log.info("3");
                     return false;
@@ -72,21 +72,21 @@ public class BookLoanServiceImpl implements BookLoanService {
     }
 
     @Override
-    public List<LoanDetailDto> getBookLoanList() {
+    public List<BookLoanDetailDto> getBookLoanList() {
         List<BookLoan> loanList = bookLoanRepository.findAll();
-        List<LoanDetailDto> loanDetail = new ArrayList<>();
+        List<BookLoanDetailDto> loanDetail = new ArrayList<>();
         for (BookLoan bookLoan : loanList) {
             User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
             Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
-            loanDetail.add(new LoanDetailDto(bookLoan.getId() , user.getName(), book));
+            loanDetail.add(new BookLoanDetailDto(bookLoan.getId() , user.getName(), book));
         }
         return loanDetail;
     }
 
     @Override
-    public void bookLoan(LoanDto loanDto) {
-        Long userId = loanDto.getUserId();
-        List<Long> bookIdList = loanDto.getBookId();
+    public void bookLoan(BookLoanDto BookLoanDto) {
+        Long userId = BookLoanDto.getUserId();
+        List<Long> bookIdList = BookLoanDto.getBookId();
 
         for (Long bookId : bookIdList) {
             bookLoanRepository.save(new BookLoan(

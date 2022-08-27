@@ -1,7 +1,8 @@
 package com.example.gbswbookmanager.controller;
 
-import com.example.gbswbookmanager.dto.LoanDetailDto;
-import com.example.gbswbookmanager.dto.LoanDto;
+import com.example.gbswbookmanager.dto.BookLoanDetailDto;
+import com.example.gbswbookmanager.dto.BookLoanDto;
+import com.example.gbswbookmanager.dto.BookReturnDetialDto;
 import com.example.gbswbookmanager.service.book.BookService;
 import com.example.gbswbookmanager.service.bookLoan.BookLoanService;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,14 @@ public class BookLoanController {
     private final BookLoanService bookLoanService;
 
     @GetMapping
-    public ResponseEntity<List<LoanDetailDto>> getBookLoanList() {
+    public ResponseEntity<List<BookLoanDetailDto>> getBookLoanList() {
         return ResponseEntity.ok().body(bookLoanService.getBookLoanList());
     }
 
     @PostMapping
-    public ResponseEntity<?> bookLoan(@RequestBody LoanDto loanDto) {
-        if (bookLoanService.checkBookLoan(loanDto)) {
-            bookLoanService.bookLoan(loanDto);
+    public ResponseEntity<?> bookLoan(@RequestBody BookLoanDto BookLoanDto) {
+        if (bookLoanService.checkBookLoan(BookLoanDto)) {
+            bookLoanService.bookLoan(BookLoanDto);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.ok().body("대출 신청을 한 책, 이미 대출 한 책 또는 수량이 부족합니다.");
