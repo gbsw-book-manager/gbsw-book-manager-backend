@@ -2,7 +2,6 @@ package com.example.gbswbookmanager.service.bookReturn;
 
 import com.example.gbswbookmanager.dto.BookReturnDetialDto;
 import com.example.gbswbookmanager.dto.BookReturnDto;
-import com.example.gbswbookmanager.entity.BookReturn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

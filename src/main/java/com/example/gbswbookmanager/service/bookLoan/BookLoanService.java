@@ -2,7 +2,6 @@ package com.example.gbswbookmanager.service.bookLoan;
 
 import com.example.gbswbookmanager.dto.BookLoanDetailDto;
 import com.example.gbswbookmanager.dto.BookLoanDto;
-import com.example.gbswbookmanager.dto.BookReturnDetialDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -59,14 +59,10 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll();
     }
 
-
-
     @Override
     public void addBook(Book book) {
         bookRepository.save(book);
     }
-
-
 
     @Override
     public void updateBook(Book book) {
