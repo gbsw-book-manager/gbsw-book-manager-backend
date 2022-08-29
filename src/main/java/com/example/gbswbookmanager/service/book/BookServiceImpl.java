@@ -1,8 +1,11 @@
 package com.example.gbswbookmanager.service.book;
 
 import com.example.gbswbookmanager.dto.BookDto;
+import com.example.gbswbookmanager.dto.LoanExtensionDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.BookLoan;
+import com.example.gbswbookmanager.entity.BookLoanApplication;
+import com.example.gbswbookmanager.repository.BookLoanApplicationRepository;
 import com.example.gbswbookmanager.repository.BookLoanRepository;
 import com.example.gbswbookmanager.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,20 +25,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookLoanRepository bookLoanRepository;
 
-    @Override
-    public Boolean checkBookExistence(String title) {
-        Book book = bookRepository.findByTitle(title);
-
-        return book != null;
-    }
-
-    @Override
-    public Boolean checkBookQuantity(Long id) {
-        BookLoan bookLoan = bookLoanRepository.findById(id).orElseThrow(NullPointerException::new);
-        Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
-
-        return book.getQuantityleft() != 0;
-    }
+    private final BookLoanApplicationRepository bookLoanApplicationRepository;
 
     @Override
     public Book setBook(BookDto bookDto) {
@@ -47,6 +37,21 @@ public class BookServiceImpl implements BookService {
                 bookDto.getQuantity(),
                 bookDto.getQuantity()
         );
+    }
+
+    @Override
+    public Boolean checkBookExistence(String title) {
+        Book book = bookRepository.findByTitle(title);
+
+        return book != null;
+    }
+
+    @Override
+    public Boolean checkBookQuantity(Long id) {
+        BookLoanApplication bookLoanApplication = bookLoanApplicationRepository.findById(id).orElseThrow(NullPointerException::new);
+        Book book = bookRepository.findById(bookLoanApplication.getBookId()).orElseThrow(NullPointerException::new);
+
+        return book.getQuantityleft() != 0;
     }
 
     @Override
@@ -63,6 +68,23 @@ public class BookServiceImpl implements BookService {
     public void addBook(Book book) {
         bookRepository.save(book);
     }
+
+    @Override
+    public Boolean bookLoanExtension(LoanExtensionDto loanExtensionDto) {
+        Book book = bookRepository.findByTitle(loanExtensionDto.getBookTitle());
+        List<BookLoan> bookLoanList = bookLoanRepository.findAll();
+
+        for (BookLoan bookLoan : bookLoanList) {
+            if (bookLoan.getUserId().equals(loanExtensionDto.getUserId())) {
+                if (loanExtensionDto.getBookTitle().equals(book.getTitle())) {
+                    bookLoan.setLoanExtension(true);
+                    log.info("heeeeeeeeeeeeep");
+                    return true;
+                }
+            }
+        }
+        return false;
+     }
 
     @Override
     public void updateBook(Book book) {

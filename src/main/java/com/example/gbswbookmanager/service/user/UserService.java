@@ -21,8 +21,10 @@ public interface UserService {
     // id를 통해 그 사용자가 빌린 책 모두 출력
     public List<Book> getUserLoanBooks(Long id);
 
-    // 모든 사용자 검색
     public List<User> getUsers();
+
+    // 모든 사용자 검색
+    public List<User> getUsersExceptAdmin();
 
     // Book Id와 참조되어 있는 컬럼 찾기
     public List<String> getUserNameByBookId(Long id);

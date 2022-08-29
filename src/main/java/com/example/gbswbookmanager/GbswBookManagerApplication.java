@@ -9,11 +9,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 
+@EnableScheduling
 @SpringBootApplication
 public class GbswBookManagerApplication {
 
@@ -48,12 +50,12 @@ public class GbswBookManagerApplication {
             userService.addRoleToUser("nicenicnic123@gmail.com", "ROLE_USER");
             userService.addRoleToUser("nicenicnic123@gmail.com", "ROLE_ADMIN");
 
-            userService.addBookToUser("nicenicnic1@gmail.com", "이펙티브 타입스크립트");
-            userService.addBookToUser("nicenicnic1@gmail.com", "이펙티브 자바");
-            userService.addBookToUser("nicenicnic12@gmail.com", "파이썬 기초");
-            userService.addBookToUser("nicenicnic123@gmail.com", "이펙티브 타입스크립트");
-            userService.addBookToUser("nicenicnic123@gmail.com", "이펙티브 자바");
-            userService.addBookToUser("nicenicnic123@gmail.com", "파이썬 고급");
+//            userService.addBookToUser("nicenicnic1@gmail.com", "이펙티브 타입스크립트");
+//            userService.addBookToUser("nicenicnic1@gmail.com", "이펙티브 자바");
+//            userService.addBookToUser("nicenicnic12@gmail.com", "파이썬 기초");
+//            userService.addBookToUser("nicenicnic123@gmail.com", "이펙티브 타입스크립트");
+//            userService.addBookToUser("nicenicnic123@gmail.com", "이펙티브 자바");
+//            userService.addBookToUser("nicenicnic123@gmail.com", "파이썬 고급");
         };
     }
 

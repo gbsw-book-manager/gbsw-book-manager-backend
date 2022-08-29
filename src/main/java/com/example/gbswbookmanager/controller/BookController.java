@@ -1,6 +1,7 @@
 package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.dto.BookDto;
+import com.example.gbswbookmanager.dto.LoanExtensionDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.service.book.BookService;
 import com.example.gbswbookmanager.service.user.UserService;
@@ -39,7 +40,14 @@ public class BookController {
         }
     }
 
-
+    @PutMapping("/extension")
+    public ResponseEntity<?> bookLoanExtension(@RequestBody LoanExtensionDto loanExtensionDto) {
+        if (bookService.bookLoanExtension(loanExtensionDto)) {
+            return ResponseEntity.ok().body("책 반납 기한이 연장되었습니다.");
+        } else {
+            return ResponseEntity.ok().body("연체 된 책입니다.");
+        }
+    }
 
     @PutMapping
     public void updateBook(@RequestBody Book book) {

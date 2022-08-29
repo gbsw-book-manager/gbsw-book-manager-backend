@@ -2,6 +2,7 @@ package com.example.gbswbookmanager.service.bookReturn;
 
 import com.example.gbswbookmanager.dto.BookReturnDetialDto;
 import com.example.gbswbookmanager.dto.BookReturnDto;
+import com.example.gbswbookmanager.entity.BookReturn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
 public interface BookReturnService {
 
     public Boolean checkBookReturn(BookReturnDto bookReturnDto);
+
+    public List<BookReturn> getBookReturnsExtension();
 
     public List<BookReturnDetialDto> getBookReturns();
 

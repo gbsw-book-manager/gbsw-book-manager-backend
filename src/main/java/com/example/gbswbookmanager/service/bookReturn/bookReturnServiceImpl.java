@@ -2,16 +2,11 @@ package com.example.gbswbookmanager.service.bookReturn;
 
 import com.example.gbswbookmanager.dto.BookReturnDetialDto;
 import com.example.gbswbookmanager.dto.BookReturnDto;
-import com.example.gbswbookmanager.entity.Book;
-import com.example.gbswbookmanager.entity.BookReturn;
-import com.example.gbswbookmanager.entity.User;
-import com.example.gbswbookmanager.repository.BookRepository;
-import com.example.gbswbookmanager.repository.BookReturnRepository;
-import com.example.gbswbookmanager.repository.UserRepository;
+import com.example.gbswbookmanager.entity.*;
+import com.example.gbswbookmanager.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +20,11 @@ public class bookReturnServiceImpl implements BookReturnService {
 
     private final BookRepository bookRepository;
 
+    private final BookLoanRepository bookLoanRepository;
+
     private final BookReturnRepository bookReturnRepository;
+
+    private final BookOverdueRepository bookOverdueRepository;
 
     @Override
     public Boolean checkBookReturn(BookReturnDto bookReturnDto) {
@@ -44,6 +43,11 @@ public class bookReturnServiceImpl implements BookReturnService {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<BookReturn> getBookReturnsExtension() {
+        return bookReturnRepository.findAll();
     }
 
     @Override
@@ -75,9 +79,20 @@ public class bookReturnServiceImpl implements BookReturnService {
     @Override
     public void bookReturnApproval(Long returnId) {
         BookReturn bookReturn = bookReturnRepository.findById(returnId).orElseThrow(NullPointerException::new);
+        List<BookLoan> bookLoan = bookLoanRepository.findAll();
 
         User user = userRepository.findById(bookReturn.getUserId()).orElseThrow(NullPointerException::new);
         Book book = bookRepository.findByTitle(bookReturn.getBookTitle());
+
+        for (BookLoan loanBook : bookLoan) {
+            if (loanBook.getBookId().equals(book.getId())) {
+                if (loanBook.getOverdue()) {
+                    BookOverdue bookOverdue = bookOverdueRepository.findByUserIdAndBookId(user.getId(), book.getId());
+                    bookOverdueRepository.delete(bookOverdue);
+                }
+                bookLoanRepository.deleteById(loanBook.getId());
+            }
+        }
 
         user.getBooks().remove(book);
         book.setQuantityleft(book.getQuantityleft() + 1);

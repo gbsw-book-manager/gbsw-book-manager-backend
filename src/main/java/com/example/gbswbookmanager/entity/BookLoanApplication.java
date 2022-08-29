@@ -8,13 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookReturn {
+public class BookLoanApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +21,6 @@ public class BookReturn {
 
     private Long userId;
 
-    private String bookTitle;
+    private Long bookId;
 
 }

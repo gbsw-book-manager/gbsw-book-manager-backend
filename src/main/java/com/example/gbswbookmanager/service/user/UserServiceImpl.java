@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsersExceptAdmin() {
         List<User> userList = userRepository.findAll();
         List<User> users = new ArrayList<>(userList);
 

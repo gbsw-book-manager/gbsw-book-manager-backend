@@ -2,9 +2,11 @@ package com.example.gbswbookmanager.service.bookLoan;
 
 import com.example.gbswbookmanager.dto.BookLoanDetailDto;
 import com.example.gbswbookmanager.dto.BookLoanDto;
+import com.example.gbswbookmanager.entity.BookLoan;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.entity.Book;
-import com.example.gbswbookmanager.entity.BookLoan;
+import com.example.gbswbookmanager.entity.BookLoanApplication;
+import com.example.gbswbookmanager.repository.BookLoanApplicationRepository;
 import com.example.gbswbookmanager.repository.BookLoanRepository;
 import com.example.gbswbookmanager.repository.BookRepository;
 import com.example.gbswbookmanager.repository.UserRepository;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class BookLoanServiceImpl implements BookLoanService {
     private final BookRepository bookRepository;
 
     private final BookLoanRepository bookLoanRepository;
+
+    private final BookLoanApplicationRepository bookLoanApplicationRepository;
 
     private final LoanMailService loanMailService;
 
@@ -51,18 +56,18 @@ public class BookLoanServiceImpl implements BookLoanService {
         }
 
         // 유저가 대출 신청한 책에서 빌리려하는 책이 있는 지 확인
-        List<BookLoan> bookLoanList = bookLoanRepository.findAll();
+        List<BookLoanApplication> bookLoanApplicationList = bookLoanApplicationRepository.findAll();
 
-        for (BookLoan bookLoan : bookLoanList) {
+        for (BookLoanApplication bookLoanApplication : bookLoanApplicationList) {
             // 빌리려는 책의 수량이 남는 지 확인
-            Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
+            Book book = bookRepository.findById(bookLoanApplication.getBookId()).orElseThrow(NullPointerException::new);
             if (book.getQuantityleft() == 0) {
                 log.info("2");
                 return false;
             }
 
-            if (bookLoan.getUserId().equals(BookLoanDto.getUserId())) {
-                if (bookIdList.contains(bookLoan.getBookId())) {
+            if (bookLoanApplication.getUserId().equals(BookLoanDto.getUserId())) {
+                if (bookIdList.contains(bookLoanApplication.getBookId())) {
                     log.info("3");
                     return false;
                 }
@@ -73,12 +78,12 @@ public class BookLoanServiceImpl implements BookLoanService {
 
     @Override
     public List<BookLoanDetailDto> getBookLoanList() {
-        List<BookLoan> loanList = bookLoanRepository.findAll();
+        List<BookLoanApplication> loanList = bookLoanApplicationRepository.findAll();
         List<BookLoanDetailDto> loanDetail = new ArrayList<>();
-        for (BookLoan bookLoan : loanList) {
-            User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
-            Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
-            loanDetail.add(new BookLoanDetailDto(bookLoan.getId() , user.getName(), book));
+        for (BookLoanApplication bookLoanApplication : loanList) {
+            User user = userRepository.findById(bookLoanApplication.getUserId()).orElseThrow(NullPointerException::new);
+            Book book = bookRepository.findById(bookLoanApplication.getBookId()).orElseThrow(NullPointerException::new);
+            loanDetail.add(new BookLoanDetailDto(bookLoanApplication.getId() , user.getName(), book));
         }
         return loanDetail;
     }
@@ -89,7 +94,7 @@ public class BookLoanServiceImpl implements BookLoanService {
         List<Long> bookIdList = BookLoanDto.getBookId();
 
         for (Long bookId : bookIdList) {
-            bookLoanRepository.save(new BookLoan(
+            bookLoanApplicationRepository.save(new BookLoanApplication(
                     null,
                     userId,
                     bookId
@@ -99,21 +104,22 @@ public class BookLoanServiceImpl implements BookLoanService {
 
     @Override
     public void loanApproval(Long id) throws Exception {
-        BookLoan bookLoan = bookLoanRepository.findById(id).orElseThrow(NullPointerException::new);
-        User user = userRepository.findById(bookLoan.getUserId()).orElseThrow(NullPointerException::new);
-        Book book = bookRepository.findById(bookLoan.getBookId()).orElseThrow(NullPointerException::new);
+        BookLoanApplication bookLoanApplication = bookLoanApplicationRepository.findById(id).orElseThrow(NullPointerException::new);
+        User user = userRepository.findById(bookLoanApplication.getUserId()).orElseThrow(NullPointerException::new);
+        Book book = bookRepository.findById(bookLoanApplication.getBookId()).orElseThrow(NullPointerException::new);
+        LocalDate loanDate = LocalDate.now();
 
         book.setQuantityleft(book.getQuantityleft() - 1);
 
         user.getBooks().add(book);
-        bookLoanRepository.deleteById(id);
-        bookRepository.save(book);
+        bookLoanRepository.save(new BookLoan(null, user.getId(), book.getId(), loanDate.plusMonths(3), false, false));
 
-        loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle());
+        bookLoanApplicationRepository.deleteById(id);
+        loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle(), loanDate.plusMonths(1));
     }
 
     @Override
     public void refuseBookLoan(Long id) {
-        bookLoanRepository.deleteById(id);
+        bookLoanApplicationRepository.deleteById(id);
     }
 }

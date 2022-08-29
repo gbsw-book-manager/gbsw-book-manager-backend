@@ -9,18 +9,16 @@ import org.springframework.stereotype.Service;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoanMailServiceImpl implements LoanMailService {
+public class OverdueAdminMailServiceImpl implements OverdueAdminMailService {
 
     private final JavaMailSender javaMailSender;
 
     @Override
-    public MimeMessage createLoanMessage(String name, String email, String bookTitle, LocalDate loanDate) throws Exception {
+    public MimeMessage createExtensionAdminMessage(String name, String email, String bookTitle) throws Exception {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         message.setFrom("gbsw_book_manager@naver.com");
@@ -88,7 +86,7 @@ public class LoanMailServiceImpl implements LoanMailService {
                 "          padding: 0;\n" +
                 "          text-align: center;\n" +
                 "          vertical-align: top;\n" +
-                "          width: 900px;\n" +
+                "          width: 580px;\n" +
                 "        \"\n" +
                 "        align=\"center\"\n" +
                 "      >\n" +
@@ -357,24 +355,8 @@ public class LoanMailServiceImpl implements LoanMailService {
                 "                                  word-wrap: normal;\n" +
                 "                                \"\n" +
                 "                              >\n" +
-                "                                안녕하세요, " + name + "님<a\n" +
-                "                                  href=\"\"\n" +
-                "                                  style=\"\n" +
-                "                                    margin: 0;\n" +
-                "                                    color: royalblue;\n" +
-                "                                    font-family: helvetica, arial, sans-serif;\n" +
-                "                                    font-weight: 400;\n" +
-                "                                    line-: 1.3;\n" +
-                "                                    margin: 0;\n" +
-                "                                    padding: 0;\n" +
-                "                                    text-align: left;\n" +
-                "                                    text-decoration: none;\n" +
-                "                                  \"\n" +
-                "                                  rel=\"noreferrer noopener\"\n" +
-                "                                  target=\"_blank\"\n" +
-                "                                >\n" +
-                "                                  책 대출이 되었습니다.</a\n" +
-                "                                >\n" +
+                "                                " + name + "님이 " + bookTitle + " 책을\n" +
+                "                                연체하셨습니다.\n" +
                 "                              </h6>\n" +
                 "                              <table\n" +
                 "                                style=\"\n" +
@@ -430,33 +412,11 @@ public class LoanMailServiceImpl implements LoanMailService {
                 "                                  margin: 0 auto;\n" +
                 "                                  font-size: 18px;\n" +
                 "                                  line-height: 1.5;\n" +
-                "                                  width: 100%;\n" +
+                "                                  width: 80%;\n" +
                 "                                \"\n" +
                 "                              >\n" +
-                "                                ncs 프로젝트 실습실에서 " + bookTitle + " 책을 가져가주시기\n" +
-                "                                바랍니다.\n" +
+                "                                책을 반납하여주시기 바랍니다.\n" +
                 "                              </div>\n" +
-                "                              <p\n" +
-                "                                style=\"\n" +
-                "                                  text-align: center;\n" +
-                "                                  color: gray;\n" +
-                "                                  margin-top: 2px;\n" +
-                "                                  margin-bottom: 2px;\n" +
-                "                                \"\n" +
-                "                              >\n" +
-                "                                " + loanDate.getYear() + "년 " + loanDate.getMonthValue() + "월 " + loanDate.getDayOfMonth() + "일 전 까지 반납해주세요. 기한이\n" +
-                "                                지나면 연체 처리 됩니다.\n" +
-                "                              </p>\n" +
-                "                               <p\n" +
-                "                                style=\"\n" +
-                "                                  text-align: center;\n" +
-                "                                  color: gray;\n" +
-                "                                  margin-top: 10px;\n" +
-                "                                  margin-bottom: 2px;\n" +
-                "                                \"\n" +
-                "                              >\n" +
-                "                                대출 기한 1회 연장 가능합니다.\n" +
-                "                              </p>" +
                 "                            </th>\n" +
                 "                            <th\n" +
                 "                              colspan=\"1\"\n" +
@@ -714,11 +674,9 @@ public class LoanMailServiceImpl implements LoanMailService {
     }
 
     @Override
-    public void sendLoanMail(String name, String email, String bookTitle, LocalDate loanDate) throws Exception {
+    public void sendExtensionAdminMail(String name, String email, String bookTitle) throws Exception {
         try {
-            MimeMessage mailMessage = createLoanMessage(name, email, bookTitle, loanDate);
-
-            log.info("{} : email", email);
+            MimeMessage mailMessage = createExtensionAdminMessage(name, email, bookTitle);
 
             javaMailSender.send(mailMessage);
         } catch (MailException mailException) {
