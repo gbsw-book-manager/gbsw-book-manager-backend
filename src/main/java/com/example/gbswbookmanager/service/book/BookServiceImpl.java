@@ -75,11 +75,13 @@ public class BookServiceImpl implements BookService {
         List<BookLoan> bookLoanList = bookLoanRepository.findAll();
 
         for (BookLoan bookLoan : bookLoanList) {
-            if (bookLoan.getUserId().equals(loanExtensionDto.getUserId())) {
-                if (loanExtensionDto.getBookTitle().equals(book.getTitle())) {
+            if (bookLoan.getUserId().equals(loanExtensionDto.getUserId()) && loanExtensionDto.getBookTitle().equals(book.getTitle())) {
+                if (!bookLoan.getLoanExtension() && !bookLoan.getOverdue()) {
                     bookLoan.setLoanExtension(true);
                     log.info("heeeeeeeeeeeeep");
                     return true;
+                } else {
+                    return false;
                 }
             }
         }
