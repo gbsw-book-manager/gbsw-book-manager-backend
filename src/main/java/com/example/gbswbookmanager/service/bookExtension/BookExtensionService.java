@@ -1,4 +1,4 @@
-package com.example.gbswbookmanager.service.BookExtension;
+package com.example.gbswbookmanager.service.bookExtension;
 
 import org.springframework.stereotype.Service;
 
