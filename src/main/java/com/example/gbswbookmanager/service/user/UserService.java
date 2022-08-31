@@ -2,12 +2,15 @@ package com.example.gbswbookmanager.service.user;
 
 import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.dto.RegisterDto;
+import com.example.gbswbookmanager.dto.UserLoanDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface UserService {
@@ -19,7 +22,7 @@ public interface UserService {
     public User getUser(String username);
 
     // id를 통해 그 사용자가 빌린 책 모두 출력
-    public List<Book> getUserLoanBooks(Long id);
+    public List<UserLoanDto> getUserLoanBooks(Long id);
 
     public List<User> getUsers();
 

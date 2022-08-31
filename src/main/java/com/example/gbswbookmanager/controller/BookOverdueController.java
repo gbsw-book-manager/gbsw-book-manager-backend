@@ -1,5 +1,6 @@
 package com.example.gbswbookmanager.controller;
 
+import com.example.gbswbookmanager.dto.BookOverdueDto;
 import com.example.gbswbookmanager.entity.BookOverdue;
 import com.example.gbswbookmanager.service.bookOverdue.BookOverdueService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class BookOverdueController {
     private final BookOverdueService bookOverdueService;
 
     @GetMapping
-    public ResponseEntity<List<BookOverdue>> getBookOverdues() {
+    public ResponseEntity<List<BookOverdueDto>> getBookOverdues() {
         return ResponseEntity.ok().body(bookOverdueService.getBookOverdues());
     }
 

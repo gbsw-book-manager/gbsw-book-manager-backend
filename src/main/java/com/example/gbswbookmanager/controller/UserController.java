@@ -3,6 +3,7 @@ package com.example.gbswbookmanager.controller;
 import com.example.gbswbookmanager.config.auth.PrincipalDetails;
 import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.dto.RegisterDto;
+import com.example.gbswbookmanager.dto.UserLoanDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.entity.User;
 import com.example.gbswbookmanager.service.mail.AuthMailService;
@@ -13,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -26,7 +29,7 @@ public class UserController {
     private final AuthMailService authMailService;
 
     @GetMapping("/user")
-    public ResponseEntity<List<Book>> getUserLoanBooks(@RequestParam Long id) {
+    public ResponseEntity<List<UserLoanDto>> getUserLoanBooks(@RequestParam Long id) {
         return ResponseEntity.ok().body(userService.getUserLoanBooks(id));
     }
 

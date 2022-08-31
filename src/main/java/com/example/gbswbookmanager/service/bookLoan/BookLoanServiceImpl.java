@@ -112,7 +112,7 @@ public class BookLoanServiceImpl implements BookLoanService {
         book.setQuantityleft(book.getQuantityleft() - 1);
 
         user.getBooks().add(book);
-        bookLoanRepository.save(new BookLoan(null, user.getId(), book.getId(), loanDate.plusMonths(3), false, false));
+        bookLoanRepository.save(new BookLoan(null, user.getId(), book.getId(), loanDate, false, false));
 
         bookLoanApplicationRepository.deleteById(id);
         loanMailService.sendLoanMail(user.getName(), user.getUsername(), book.getTitle(), loanDate.plusMonths(1));

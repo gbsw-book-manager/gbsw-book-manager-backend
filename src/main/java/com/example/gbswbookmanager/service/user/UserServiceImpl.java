@@ -1,10 +1,13 @@
 package com.example.gbswbookmanager.service.user;
 
 import com.example.gbswbookmanager.dto.PasswordDto;
+import com.example.gbswbookmanager.dto.UserLoanDto;
 import com.example.gbswbookmanager.entity.Book;
 import com.example.gbswbookmanager.dto.RegisterDto;
+import com.example.gbswbookmanager.entity.BookLoan;
 import com.example.gbswbookmanager.entity.Role;
 import com.example.gbswbookmanager.entity.User;
+import com.example.gbswbookmanager.repository.BookLoanRepository;
 import com.example.gbswbookmanager.repository.BookRepository;
 import com.example.gbswbookmanager.repository.RoleRepository;
 import com.example.gbswbookmanager.repository.UserRepository;
@@ -14,9 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -29,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     private final BookRepository bookRepository;
+
+    private final BookLoanRepository bookLoanRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -46,10 +50,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Book> getUserLoanBooks(Long id) {
+    public List<UserLoanDto> getUserLoanBooks(Long id) {
         User user = userRepository.findById(id).orElseThrow(NullPointerException::new);
+        List<UserLoanDto> userLoanList = new ArrayList<>();
 
-        return new ArrayList<>(user.getBooks());
+        for (Book bookLoan : user.getBooks()) {
+            BookLoan book = bookLoanRepository.findByUserIdAndBookId(id, bookLoan.getId());
+            userLoanList.add(new UserLoanDto(bookLoan, book.getLoanDate()));
+        }
+
+        return userLoanList;
     }
 
     @Override
