@@ -32,7 +32,7 @@ public class GbswBookManagerApplication {
     CommandLineRunner run(UserService userService, BookService bookService) {
         return args -> {
 //            userService.saveUserTest(new User(null, "박대일", "2101", "nicenicnic1@gmail.com", "1234", new ArrayList<>(), new ArrayList<>()));
-//            userService.saveUserTest(new User(null, "박대이", "2102", "nicenicnic12@gmail.com", "1234", new ArrayList<>(), new ArrayList<>()));
+//            userService.saveUserTest(new User(null, "관리자", "0000", "admin", "1234", new ArrayList<>(), new ArrayList<>()));
             userService.saveUserTest(new User(null, "박대형", "2107", "eoguddl.dev@gmail.com", "1234", new ArrayList<>(), new ArrayList<>()));
             userService.saveUserTest(new User(null, "김진효", "2206", "admin@jinhyo.dev", "1234", new ArrayList<>(), new ArrayList<>()));
 
@@ -46,7 +46,7 @@ public class GbswBookManagerApplication {
 //            bookService.addBook(new Book(null, "이펙티브 타입스크립트", "대형이", "대형출판사", 5, 4));
 
 //            userService.addRoleToUser("nicenicnic1@gmail.com", "ROLE_USER");
-//            userService.addRoleToUser("nicenicnic12@gmail.com", "ROLE_USER");
+//            userService.addRoleToUser("admin", "ROLE_ADMIN");
             userService.addRoleToUser("eoguddl.dev@gmail.com", "ROLE_ADMIN");
             userService.addRoleToUser("admin@jinhyo.dev", "ROLE_ADMIN");
 

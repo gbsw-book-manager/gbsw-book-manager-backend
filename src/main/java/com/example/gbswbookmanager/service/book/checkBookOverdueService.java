@@ -41,7 +41,7 @@ public class checkBookOverdueService {
     private static final int OVERDUE_DAY = 31;
     private static final int OVERDUE_DAY_EXTENSION = 61;
 
-    @Scheduled(cron = "0 * * * * ?") // 1분마다 메소드 실행
+    @Scheduled(cron = "0 0 0 * * ?") // 1분마다 메소드 실행
     public void checkBookOverdue() throws Exception {
         log.info("check start");
 
@@ -63,7 +63,7 @@ public class checkBookOverdueService {
                             log.info("beep1: {}", user.getName());
                             userLoanBook.setOverdue(true);
                             bookOverdueRepository.save(new BookOverdue(null, user.getId(), userLoanBook.getId()));
-//                            overdueAdminMailService.sendExtensionAdminMail();]
+//                            overdueAdminMailService.sendExtensionAdminMail();
                             log.info("username: {}", user.getUsername());
                             overdueUserMailService.sendExtensionUserMail(user.getName(), user.getUsername(), book.getTitle());
                         }
