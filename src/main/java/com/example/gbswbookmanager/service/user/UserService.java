@@ -18,6 +18,8 @@ public interface UserService {
     // 사용자가 회원가입 했는 지 확인
     public Boolean checkUserEmail(String email);
 
+    public Boolean checkStudentId(String student_id);
+
     // USERNAME을 통해 DB에서 사용자 검색
     public User getUser(String username);
 

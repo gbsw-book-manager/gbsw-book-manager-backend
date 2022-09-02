@@ -22,7 +22,7 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private String studen_id;
+    private String studentid;
 
     // email
     @Column(nullable = false)

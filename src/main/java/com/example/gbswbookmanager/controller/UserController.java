@@ -39,24 +39,34 @@ public class UserController {
     }
 
     @PostMapping("/certification-email")
-    public void certificationEmail(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
-        authMailService.sendAuthMail(name, email);
+    public ResponseEntity<?> certificationEmail(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
+        if (userService.checkUserEmail(email)) {
+            authMailService.sendAuthMail(name, email);
+            return ResponseEntity.ok("이메일 인증 성공");
+        } else {
+            return ResponseEntity.ok("이메일이 이미 존재함");
+        }
     }
 
     @PostMapping("/sign-up")
-    public void register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
         String email = registerDto.getUsername();
         String code = registerDto.getCode();
 
         if (userService.checkUserEmail(email)) {
             if (authMailService.checkAuthCode(email, code)) {
-                userService.saveUser(registerDto);
-                userService.addRoleToUser(email, "ROLE_USER");
+                if (userService.checkStudentId(registerDto.getStudentId())) {
+                    userService.saveUser(registerDto);
+                    userService.addRoleToUser(email, "ROLE_USER");
+                    return ResponseEntity.ok("회원가입 성공");
+                } else {
+                    return ResponseEntity.ok("학번이 이미 존재함");
+                }
             } else {
-                log.info("code is Inconsistency");
+                return ResponseEntity.ok("인증 코드 불일치");
             }
         } else {
-            log.info("User is in the Database");
+            return ResponseEntity.ok("유저가 이미 있음");
         }
     }
 

@@ -40,7 +40,7 @@ public class BookOverdueServiceImpl implements BookOverdueService {
 
             BookLoan bookLoan = bookLoanRepository.findByUserIdAndBookId(overdueInfo.getUserId(), overdueInfo.getBookId());
 
-            overdueInfoList.add(new BookOverdueDto(user.getName(), user.getStuden_id(), book.getTitle(), bookLoan.getLoanDate()));
+            overdueInfoList.add(new BookOverdueDto(user.getName(), user.getStudentid(), book.getTitle(), bookLoan.getLoanDate()));
         }
         return overdueInfoList;
     }
