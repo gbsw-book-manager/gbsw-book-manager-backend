@@ -10,9 +10,12 @@ import com.example.gbswbookmanager.service.mail.AuthMailService;
 import com.example.gbswbookmanager.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,16 +43,22 @@ public class UserController {
 
     @PostMapping("/certification-email")
     public ResponseEntity<?> certificationEmail(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
+        JSONParser jsonParse = new JSONParser();
+
         if (userService.checkUserEmail(email)) {
             authMailService.sendAuthMail(name, email);
             return ResponseEntity.ok("이메일 인증 성공");
         } else {
-            return ResponseEntity.ok("이메일이 이미 존재함");
+            String jsonString = "{\"log\":\"이메일이 이미 존재함\"}";
+            JSONObject obj =  (JSONObject)jsonParse.parse(jsonString);
+            return ResponseEntity.ok(obj);
         }
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) throws ParseException {
+        JSONParser jsonParse = new JSONParser();
+
         String email = registerDto.getUsername();
         String code = registerDto.getCode();
 
@@ -58,15 +67,23 @@ public class UserController {
                 if (userService.checkStudentId(registerDto.getStudentId())) {
                     userService.saveUser(registerDto);
                     userService.addRoleToUser(email, "ROLE_USER");
-                    return ResponseEntity.ok("회원가입 성공");
+                    String jsonString = "{\"log\":\"회원가입 성공\"}";
+                    JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
+                    return ResponseEntity.ok(obj);
                 } else {
-                    return ResponseEntity.ok("학번이 이미 존재함");
+                    String jsonString = "{\"log\":\"학번이 이미 존재함\"}";
+                    JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
+                    return ResponseEntity.ok(obj);
                 }
             } else {
-                return ResponseEntity.ok("인증 코드 불일치");
+                String jsonString = "{\"log\":\"인증 코드 불일치\"}";
+                JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
+                return ResponseEntity.ok(obj);
             }
         } else {
-            return ResponseEntity.ok("유저가 이미 있음");
+            String jsonString = "{\"log\":\"유저가 이미 있음\"}";
+            JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
+            return ResponseEntity.ok(obj);
         }
     }
 

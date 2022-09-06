@@ -483,11 +483,15 @@ public class AuthMailServiceImpl implements AuthMailService {
         LocalDateTime time = LocalDateTime.now();
         AuthMailToken authMailToken = mailTokenRepository.findByEmailAndExpirationDateAfterAndExpired(email, time, false);
 
-        if (authMailToken.getCode().equals(code)) {
-            authMailToken.setTokenToUsed();
-            mailTokenRepository.save(authMailToken);
-            return true;
-        } else {
+        try {
+            if (authMailToken.getCode().equals(code)) {
+                authMailToken.setTokenToUsed();
+                mailTokenRepository.save(authMailToken);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
             return false;
         }
     }
