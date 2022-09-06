@@ -7,6 +7,8 @@ public class EmailDto {
 
     private String email;
 
+    private String studentId;
+
     private String name;
 
 }

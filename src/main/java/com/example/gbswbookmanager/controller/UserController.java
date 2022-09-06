@@ -46,14 +46,22 @@ public class UserController {
     public ResponseEntity<?> certificationEmail(@RequestBody EmailDto emailDto) throws Exception {
         JSONParser jsonParse = new JSONParser();
 
-        if (userService.checkUserEmail(emailDto.getEmail())) {
-            authMailService.sendAuthMail(emailDto.getName(), emailDto.getEmail());
-            return ResponseEntity.ok("이메일 인증 성공");
+        if (userService.checkStudentId(emailDto.getStudentId())) {
+            if (userService.checkUserEmail(emailDto.getEmail())) {
+                authMailService.sendAuthMail(emailDto.getName(), emailDto.getEmail());
+                return ResponseEntity.ok("이메일 인증 성공");
+            } else {
+                String jsonString = "{\"log\":\"이메일이 이미 존재함\"}";
+                JSONObject obj =  (JSONObject)jsonParse.parse(jsonString);
+                return ResponseEntity.ok(obj);
+            }
         } else {
-            String jsonString = "{\"log\":\"이메일이 이미 존재함\"}";
-            JSONObject obj =  (JSONObject)jsonParse.parse(jsonString);
+            String jsonString = "{\"log\":\"학번이 이미 존재함\"}";
+            JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
             return ResponseEntity.ok(obj);
         }
+
+
     }
 
     @PostMapping("/sign-up")
@@ -65,17 +73,11 @@ public class UserController {
 
         if (userService.checkUserEmail(email)) {
             if (authMailService.checkAuthCode(email, code)) {
-                if (userService.checkStudentId(registerDto.getStudentId())) {
-                    userService.saveUser(registerDto);
-                    userService.addRoleToUser(email, "ROLE_USER");
-                    String jsonString = "{\"log\":\"회원가입 성공\"}";
-                    JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
-                    return ResponseEntity.ok(obj);
-                } else {
-                    String jsonString = "{\"log\":\"학번이 이미 존재함\"}";
-                    JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
-                    return ResponseEntity.ok(obj);
-                }
+                userService.saveUser(registerDto);
+                userService.addRoleToUser(email, "ROLE_USER");
+                String jsonString = "{\"log\":\"회원가입 성공\"}";
+                JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
+                return ResponseEntity.ok(obj);
             } else {
                 String jsonString = "{\"log\":\"인증 코드 불일치\"}";
                 JSONObject obj = (JSONObject)jsonParse.parse(jsonString);
