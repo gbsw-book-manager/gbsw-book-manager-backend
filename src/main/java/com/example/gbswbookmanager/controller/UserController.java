@@ -1,6 +1,7 @@
 package com.example.gbswbookmanager.controller;
 
 import com.example.gbswbookmanager.config.auth.PrincipalDetails;
+import com.example.gbswbookmanager.dto.EmailDto;
 import com.example.gbswbookmanager.dto.PasswordDto;
 import com.example.gbswbookmanager.dto.RegisterDto;
 import com.example.gbswbookmanager.dto.UserLoanDto;
@@ -42,11 +43,11 @@ public class UserController {
     }
 
     @PostMapping("/certification-email")
-    public ResponseEntity<?> certificationEmail(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
+    public ResponseEntity<?> certificationEmail(@RequestBody EmailDto emailDto) throws Exception {
         JSONParser jsonParse = new JSONParser();
 
-        if (userService.checkUserEmail(email)) {
-            authMailService.sendAuthMail(name, email);
+        if (userService.checkUserEmail(emailDto.getEmail())) {
+            authMailService.sendAuthMail(emailDto.getName(), emailDto.getEmail());
             return ResponseEntity.ok("이메일 인증 성공");
         } else {
             String jsonString = "{\"log\":\"이메일이 이미 존재함\"}";
