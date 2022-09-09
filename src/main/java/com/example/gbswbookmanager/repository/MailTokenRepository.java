@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @Repository
 public interface MailTokenRepository extends JpaRepository<AuthMailToken, Long> {
 
+    AuthMailToken findByEmail(String email);
+
     // 만료되지 않았으며 현재보다 이후에 만료되는 토큰정보를 가져온다.
     AuthMailToken findByEmailAndExpirationDateAfterAndExpired(String email, LocalDateTime now, boolean expired);
 

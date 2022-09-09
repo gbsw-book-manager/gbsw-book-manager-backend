@@ -27,8 +27,17 @@ public class AuthMailServiceImpl implements AuthMailService {
 
         String code = UUID.randomUUID().toString().substring(0, 6);
 
+        AuthMailToken token = mailTokenRepository.findByEmail(email);
+
         AuthMailToken authMailToken = AuthMailToken.createEmailToken(email, code);
-        mailTokenRepository.save(authMailToken);
+
+        if (token == null) {
+            mailTokenRepository.save(authMailToken);
+        } else {
+            authMailToken.setId(token.getId());
+            mailTokenRepository.save(authMailToken);
+        }
+
 
         message.setFrom("gbsw_book_manager@naver.com");
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
@@ -481,6 +490,7 @@ public class AuthMailServiceImpl implements AuthMailService {
     @Override
     public Boolean checkAuthCode(String email, String code) {
         LocalDateTime time = LocalDateTime.now();
+
         AuthMailToken authMailToken = mailTokenRepository.findByEmailAndExpirationDateAfterAndExpired(email, time, false);
 
         try {

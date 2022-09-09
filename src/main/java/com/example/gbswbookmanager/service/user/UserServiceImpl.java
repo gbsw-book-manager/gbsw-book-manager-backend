@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         List<UserLoanDto> userLoanList = new ArrayList<>();
 
         for (Book bookLoan : user.getBooks()) {
+            log.info("user id: {}, book id: {}", id, bookLoan.getId());
             BookLoan book = bookLoanRepository.findByUserIdAndBookId(id, bookLoan.getId());
             userLoanList.add(new UserLoanDto(bookLoan, book.getLoanDate()));
         }
