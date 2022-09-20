@@ -52,14 +52,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim("id", user.getUser().getId().toString())
+                .withClaim("username", user.getUser().getUsername())
+                .withClaim("name", user.getUser().getName())
+                .withClaim("studentId", user.getUser().getStudentid())
                 .sign(algorithm);
 
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", access_token);
-        tokens.put("id", user.getUser().getId().toString());
-        tokens.put("username", user.getUser().getUsername());
-        tokens.put("name", user.getUser().getName());
-        tokens.put("studentId", user.getUser().getStudentid());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
